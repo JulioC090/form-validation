@@ -5,7 +5,92 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Validação de formulário</title>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="styles/style.css" />
+    <link rel="stylesheet" href="styles/utils.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/phosphor-icons"></script>
   </head>
-  <body></body>
+  <body>
+    <div class="container fullpage flex flex-column align-center">
+      <div class="section-card flex align-center">
+        <div class="form">
+          <div class="form__header">
+            <img src="imgs/art.svg" class="form__image" />
+            <h2 class="form__title">Olá!</h2>
+            <p class="form__caption">
+              Insira seus dados no formulário abaixo para fazer o cadastro
+            </p>
+          </div>
+          <form>
+            <label for="username" class="form__label">
+              Nome do Usuário
+              <div class="form__input form__input--valid">
+                <i class="ph-user"></i>
+                <input
+                  type="text"
+                  name="username"
+                  id="username"
+                  placeholder="Joe Carm"
+                />
+                <div class="form__input__status">
+                  <div class="form__input__message">
+                    <p>Erro</p>
+                  </div>
+                  <i class="ph-check-circle"></i>
+                </div>
+              </div>
+            </label>
+
+            <label for="email" class="form__label">
+              Email
+              <div class="form__input form__input--invalid">
+                <i class="ph-envelope"></i>
+                <input
+                  type="text"
+                  name="email"
+                  id="email"
+                  placeholder="joecarm@email.com"
+                />
+                <div class="form__input__status">
+                  <div class="form__input__message form__input__message--active form__input__message--error">
+                    <p>Erro</p>
+                  </div>
+                  <i class="ph-warning-circle"></i>
+                </div>
+              </div>
+            </label>
+
+            <label for="password" class="form__label">
+              Senha
+              <div class="form__input">
+                <i class="ph-lock-key"></i>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="••••••••"
+                />
+                <div class="form__input__status">
+                  <div class="form__input__message form__input__message--active">
+                    <p>Deve ter</p>
+                  </div>
+                  <i class="ph-info"></i>
+                </div>
+              </div>
+            </label>
+
+            <button class="form__button ring-focus">Enviar</button>
+          </form>
+          <div class="form__footer">
+            Não tem uma conta? <a href="#" class="ring-focus">Cadastre-se</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

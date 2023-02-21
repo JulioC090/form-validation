@@ -1,0 +1,30 @@
+.container {
+  max-width: 940px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 8px;
+}
+
+.fullpage {
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.align-center {
+  align-items: center;
+  justify-content: center;
+}
+
+@media screen and (orientation: landscape) and (max-width: 512px) {
+  .fullpage {
+    height: 100vw;
+  }
+}
