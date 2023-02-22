@@ -221,7 +221,12 @@ body {
   cursor: default;
 }
 
-.form__input__message--error {
+.form__input--valid .form__input__message {
+  --message-color: var(--green);
+  --message-text: var(--white);
+}
+
+.form__input--invalid .form__input__message {
   --message-color: var(--red-500);
   --message-text: var(--white);
 }

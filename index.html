@@ -29,7 +29,7 @@
           <form>
             <label for="username" class="form__label">
               Nome do Usuário
-              <div class="form__input form__input--valid">
+              <div class="form__input" id="input-username">
                 <i class="ph-user"></i>
                 <input
                   type="text"
@@ -38,17 +38,15 @@
                   placeholder="Joe Carm"
                 />
                 <div class="form__input__status">
-                  <div class="form__input__message">
-                    <p>Erro</p>
-                  </div>
-                  <i class="ph-check-circle"></i>
+                  <div class="form__input__message"></div>
+                  <i class="form__input__icon ph-check-circle"></i>
                 </div>
               </div>
             </label>
 
             <label for="email" class="form__label">
               Email
-              <div class="form__input form__input--invalid">
+              <div class="form__input" id="input-email">
                 <i class="ph-envelope"></i>
                 <input
                   type="text"
@@ -57,17 +55,17 @@
                   placeholder="joecarm@email.com"
                 />
                 <div class="form__input__status">
-                  <div class="form__input__message form__input__message--active form__input__message--error">
-                    <p>Erro</p>
-                  </div>
-                  <i class="ph-warning-circle"></i>
+                  <div
+                    class="form__input__message form__input__message--error"
+                  ></div>
+                  <i class="form__input__icon ph-warning-circle"></i>
                 </div>
               </div>
             </label>
 
             <label for="password" class="form__label">
               Senha
-              <div class="form__input">
+              <div class="form__input" id="input-password">
                 <i class="ph-lock-key"></i>
                 <input
                   type="password"
@@ -76,10 +74,8 @@
                   placeholder="••••••••"
                 />
                 <div class="form__input__status">
-                  <div class="form__input__message form__input__message--active">
-                    <p>Deve ter</p>
-                  </div>
-                  <i class="ph-info"></i>
+                  <div class="form__input__message"></div>
+                  <i class="form__input__icon ph-info"></i>
                 </div>
               </div>
             </label>
@@ -92,5 +88,7 @@
         </div>
       </div>
     </div>
+
+    <script src="js/inputHandle.js"></script>
   </body>
 </html>
