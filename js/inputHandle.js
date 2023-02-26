@@ -17,19 +17,32 @@ class InputHandle {
 
     this.inputElement = this.inputContainerElement.querySelector("input");
 
+    this.previousInputValue = this.inputElement.value;
+
     this.setStatus(status);
-    this.messageVisible = messageVisible;
 
     this.defaultMessage = message;
     this.setMessage(message);
+    this.messageVisible = messageVisible;
+    this.messageTimeout;
 
     this.inputElement.addEventListener("focusout", (event) => {
+      if (this.previousInputValue == this.inputElement.value) return;
+      this.previousInputValue = this.inputElement.value;
+
       if (validate(event.target.value)) {
         this.setStatus("valid");
-      } else {
-        this.setStatus("invalid");
-        this.toggleMessage(3000);
+        this.hideMessage();
+        return;
       }
+
+      this.setStatus("invalid");
+      this.showMessage(3000);
+    });
+
+    this.statusIconElement.addEventListener("click", (event) => {
+      event.preventDefault();
+      this.showMessage(3000, true);
     });
   }
 
@@ -60,14 +73,35 @@ class InputHandle {
     }
   }
 
-  toggleMessage(time) {
+  toggleMessage() {
     this.messageElement.classList.toggle("form__input__message--active");
+    this.messageVisible = !this.messageVisible;
+  }
 
-    if (time) {
-      setTimeout(() => {
-        this.messageElement.classList.toggle("form__input__message--active");
+  clearMessageTimeout() {
+    clearTimeout(this.messageTimeout);
+    this.messageTimeout = undefined;
+  }
+
+  showMessage(time, toggle = false) {
+    if (!this.messageTimeout || toggle) {
+      this.toggleMessage();
+      if (toggle) this.clearMessageTimeout();
+    }
+
+    if (time && this.messageVisible) {
+      this.clearMessageTimeout();
+      this.messageTimeout = setTimeout(() => {
+        this.messageTimeout = undefined;
+        this.toggleMessage();
       }, time);
     }
+  }
+
+  hideMessage() {
+    this.messageElement.classList.remove("form__input__message--active");
+    this.clearMessageTimeout();
+    this.messageVisible = false;
   }
 
   setMessage(message) {
