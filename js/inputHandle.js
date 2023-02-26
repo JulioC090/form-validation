@@ -4,7 +4,8 @@ class InputHandle {
     status = "default",
     messageVisible = false,
     message = "",
-    validate,
+    isRequired = false,
+    validation,
   }) {
     this.inputContainerElement = document.getElementById(inputId);
 
@@ -18,6 +19,8 @@ class InputHandle {
     this.inputElement = this.inputContainerElement.querySelector("input");
 
     this.previousInputValue = this.inputElement.value;
+    this.isRequired = isRequired;
+    this.validation = validation;
 
     this.setStatus(status);
 
@@ -30,7 +33,7 @@ class InputHandle {
       if (this.previousInputValue == this.inputElement.value) return;
       this.previousInputValue = this.inputElement.value;
 
-      if (validate(event.target.value)) {
+      if (this.hasValidValue()) {
         this.setStatus("valid");
         this.hideMessage();
         return;
@@ -112,12 +115,53 @@ class InputHandle {
   setMessageToDefault() {
     this.setMessage(this.defaultMessage);
   }
+
+  hasValidValue() {
+    if (
+      !this.validation(this.inputElement.value) ||
+      (this.isRequired && this.inputElement.value.trim() === "")
+    ) {
+      return false;
+    }
+
+    return true;
+  }
+}
+
+class FormHandle {
+  constructor({ formId, inputHandles = [], onSubmit = () => {} }) {
+    this.formElement = document.getElementById(formId);
+    this.buttonElement = this.formElement.querySelector(".form__button");
+    this.inputs = inputHandles;
+
+    this.buttonElement.disabled = true;
+
+    this.formElement.addEventListener("input", () => {
+      let isValid = true;
+      this.inputs.forEach((input) => {
+        if (!input.hasValidValue()) isValid = false;
+      });
+
+      if (!isValid) {
+        this.buttonElement.disabled = true;
+        return;
+      }
+
+      this.buttonElement.disabled = false;
+    });
+
+    this.formElement.addEventListener("submit", (event) => {
+      event.preventDefault();
+      onSubmit(event);
+    });
+  }
 }
 
 const usernameInput = new InputHandle({
   inputId: "input-username",
   message: "<p>O nome deve ter apenas caracteres</p>",
-  validate: (text) => {
+  isRequired: true,
+  validation: (text) => {
     if (text.trim() === "") return false;
 
     const nameRule = new RegExp("^[a-zA-Z]+$");
@@ -130,7 +174,8 @@ const usernameInput = new InputHandle({
 const emailInput = new InputHandle({
   inputId: "input-email",
   message: "<p>O email deve ser do tipo email@domain.com</p>",
-  validate: (text) => {
+  isRequired: true,
+  validation: (text) => {
     if (text.trim() === "") return false;
 
     const emailRule = new RegExp(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+(\.[a-z]+)?$/i);
@@ -142,8 +187,17 @@ const emailInput = new InputHandle({
 const passwordInput = new InputHandle({
   inputId: "input-password",
   message: "<p>A senha deve possuir mais de 8 caracteres</p>",
-  validate: (text) => {
+  isRequired: true,
+  validation: (text) => {
     if (text.length < 8) return false;
     return true;
+  },
+});
+
+const form = new FormHandle({
+  formId: "sign-up",
+  inputHandles: [usernameInput, emailInput, passwordInput],
+  onSubmit: () => {
+    alert("O formulário foi enviado");
   },
 });
