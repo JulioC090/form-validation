@@ -132,6 +132,7 @@ body {
   border-radius: 8px;
   background-color: #f1f5f9;
   color: var(--input-color);
+  transition: 200ms;
 }
 
 .form__input i {
@@ -189,7 +190,16 @@ body {
 .form__input__message {
   --message-color: var(--violet-700);
   --message-text: var(--white);
-  display: none;
+  visibility: hidden;
+  position: absolute;
+  bottom: 22px;
+  right: -12px;
+  width: max-content;
+  height: max-content;
+  background-color: var(--message-color);
+  border-radius: 8px;
+  padding: 8px;
+  cursor: default;
 }
 
 .form__input__message p {
@@ -202,23 +212,25 @@ body {
   content: "";
   display: inline-block;
   position: absolute;
-  bottom: calc(var(--size) * (-1));
-  right: 17px;
-  border-top: var(--size) solid var(--message-color);
-  border-left: var(--size) solid transparent;
-  border-right: var(--size) solid transparent;
+  bottom: -4px;
+  right: 16px;
+  height: 12px;
+  width: 12px;
+  background-color: var(--message-color);
+  border-radius: 4px;
+  transform: rotate(45deg);
 }
 
 .form__input__message--active {
-  display: inline;
-  position: absolute;
-  width: max-content;
-  bottom: 22px;
-  right: -12px;
-  background-color: var(--message-color);
-  border-radius: 8px;
-  padding: 8px;
-  cursor: default;
+  --message-text: var(--white);
+  visibility: visible;
+  animation: fadeIn;
+  animation-duration: 200ms;
+}
+
+.form__input--invalid .form__input__message--active {
+  animation: pulse, bounceIn;
+  animation-duration: 200ms;
 }
 
 .form__input--valid .form__input__message {
